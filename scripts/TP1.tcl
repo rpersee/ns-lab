@@ -26,6 +26,10 @@ for {set i 0} {$i < 4} {incr i} {
 $ns duplex-link $n4 $n5 1Mb 10ms RED
 $ns queue-limit $n4 $n5 80
 
+# Visualize the queue position on the link between the yellow and red nodes
+$ns duplex-link-op $n4 $n5 queuePos 0.5
+
+set colors { Blue Red Green Yellow }
 # Create four TCP agents, TCP sinks, and FTP applications
 for {set i 0} {$i < 4} {incr i} {
     set tcp($i) [new Agent/TCP/RFC793edu]
@@ -38,13 +42,17 @@ for {set i 0} {$i < 4} {incr i} {
     $ftp($i) attach-agent $tcp($i)
     $ns connect $tcp($i) $sink($i)
     $ns at 0.0 "$ftp($i) start"
+    # Color the TCP flows with different colors
+    $ns color $i [lindex $colors $i]
+    $tcp($i) set class_ $i
 }
 
 proc finish {} {
     global ns nf
     $ns flush-trace
     close $nf
-    exec nam out.nam &
+    # Run NAM with a rate of 250.0 us
+    exec nam -r 0.00025 out.nam &
     exit 0
 }
 
