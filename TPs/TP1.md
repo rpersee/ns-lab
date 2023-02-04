@@ -19,7 +19,7 @@ $$
 \begin{aligned}
     T_{PL}  &= \frac{MSS}{C_L} \\
             &= \frac{1000 \; \text{bytes}}{10 \; \text{Mbit/s}} \\
-            &= \frac{8e3 \; \text{bits}}{1e7} \; \text{bits/s} \\
+            &= \frac{8e3 \; \text{bits}}{1e7 \; \text{bits/s}} \\
             &= 8e{-4} \; \text{s}
 \end{aligned}
 $$
